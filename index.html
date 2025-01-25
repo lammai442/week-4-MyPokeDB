@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./pokemons.js"></script>
+    <script type="module" src="./script.js"></script>
+    <title>MyPokeDB</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1 class="header__title">MyPokéDB</h1>
+        <nav class="header__nav">
+          <ul class="header__nav-list">
+            <li class="header__list-item" id="pokedexLink">Pokédex</li>
+            <li class="header__list-item" id="generateLink">Team Generator</li>
+            <li class="header__list-item" id="searchLink">Search Pokemon</li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Pokedex Section -->
+      <section class="section" id="pokedex">
+        <h2 class="section__title">Pokédex</h2>
+        <section class="pokedex-section" id="pokedexSection">
+          <!-- <article class="card">
+            <div class="card__top">
+              <img
+                src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                alt="Picture of Bulbasaur"
+                class="card__img"
+              />
+              <span class="card__index">#1</span>
+            </div>
+            <div class="card__middle">
+              <h3 class="card__pokemon-name">Bulbasaur</h3>
+              <h4>Grass / Poison</h4>
+            </div>
+            <div class="card__bottom">
+              <p class="card__stat">Attack: 49</p>
+              <p class="card__stat">Defense: 49</p>
+              <p class="card__stat">Sp. Attack: 65</p>
+              <p class="card__stat">Sp. Defense: 65</p>
+              <p class="card__stat">HP: 45</p>
+              <p class="card__stat">Speed: 45</p>
+              <p class="card__stat card__stat--span-two">Total: 318</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <img
+                src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                alt="Picture of Bulbasaur"
+                class="card__img"
+              />
+              <span class="card__index">#1</span>
+            </div>
+            <div class="card__middle">
+              <h3 class="card__pokemon-name">Bulbasaur</h3>
+              <h4>Grass / Poison</h4>
+            </div>
+            <div class="card__bottom">
+              <p class="card__stat">Attack: 49</p>
+              <p class="card__stat">Defense: 49</p>
+              <p class="card__stat">Sp. Attack: 65</p>
+              <p class="card__stat">Sp. Defense: 65</p>
+              <p class="card__stat">HP: 45</p>
+              <p class="card__stat">Speed: 45</p>
+              <p class="card__stat card__stat--span-two">Total: 318</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <img
+                src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                alt="Picture of Bulbasaur"
+                class="card__img"
+              />
+              <span class="card__index">#1</span>
+            </div>
+            <div class="card__middle">
+              <h3 class="card__pokemon-name">Bulbasaur</h3>
+              <h4>Grass / Poison</h4>
+            </div>
+            <div class="card__bottom">
+              <p class="card__stat">Attack: 49</p>
+              <p class="card__stat">Defense: 49</p>
+              <p class="card__stat">Sp. Attack: 65</p>
+              <p class="card__stat">Sp. Defense: 65</p>
+              <p class="card__stat">HP: 45</p>
+              <p class="card__stat">Speed: 45</p>
+              <p class="card__stat card__stat--span-two">Total: 318</p>
+            </div>
+          </article> -->
+        </section>
+      </section>
+
+      <!-- Generate Pokemon Section -->
+      <section class="section generate-section" id="generate">
+        <h2 class="section__title">Generate Pokemon Team</h2>
+        <!-- MIN KOD - Knapp som läggs till-->
+        <button id="team-generator-btn">Generera ett random kort</button>
+      </section>
+
+      <!-- Search Pokemon Section -->
+      <section class="section search-section" id="search">
+        <h2 class="section__title">Search Pokemon</h2>
+      </section>
+    </div>
+  </body>
+</html>
+
+<!-- <article class="card">
+            <div class="card__top">
+              <img
+                src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                alt="Picture of Bulbasaur"
+                class="card__img"
+              />
+              <span class="card__index">#1</span>
+            </div>
+            <div class="card__middle">
+              <h3 class="card__pokemon-name">Bulbasaur</h3>
+              <h4>Grass / Poison</h4>
+            </div>
+            <div class="card__bottom">
+              <p class="card__stat">Attack: 49</p>
+              <p class="card__stat">Defense: 49</p>
+              <p class="card__stat">Sp. Attack: 65</p>
+              <p class="card__stat">Sp. Defense: 65</p>
+              <p class="card__stat">HP: 45</p>
+              <p class="card__stat">Speed: 45</p>
+              <p class="card__stat card__stat--span-two">Total: 318</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <img
+                src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                alt="Picture of Bulbasaur"
+                class="card__img"
+              />
+              <span class="card__index">#1</span>
+            </div>
+            <div class="card__middle">
+              <h3 class="card__pokemon-name">Bulbasaur</h3>
+              <h4>Grass / Poison</h4>
+            </div>
+            <div class="card__bottom">
+              <p class="card__stat">Attack: 49</p>
+              <p class="card__stat">Defense: 49</p>
+              <p class="card__stat">Sp. Attack: 65</p>
+              <p class="card__stat">Sp. Defense: 65</p>
+              <p class="card__stat">HP: 45</p>
+              <p class="card__stat">Speed: 45</p>
+              <p class="card__stat card__stat--span-two">Total: 318</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <img
+                src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                alt="Picture of Bulbasaur"
+                class="card__img"
+              />
+              <span class="card__index">#1</span>
+            </div>
+            <div class="card__middle">
+              <h3 class="card__pokemon-name">Bulbasaur</h3>
+              <h4>Grass / Poison</h4>
+            </div>
+            <div class="card__bottom">
+              <p class="card__stat">Attack: 49</p>
+              <p class="card__stat">Defense: 49</p>
+              <p class="card__stat">Sp. Attack: 65</p>
+              <p class="card__stat">Sp. Defense: 65</p>
+              <p class="card__stat">HP: 45</p>
+              <p class="card__stat">Speed: 45</p>
+              <p class="card__stat card__stat--span-two">Total: 318</p>
+            </div>
+          </article> -->
