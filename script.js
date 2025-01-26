@@ -220,7 +220,6 @@ function firstCaseToUpper(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-
 // MIN KOD
 // TEAM GENERATOR SECTION
 
@@ -231,28 +230,25 @@ function createTeamGeneratorBtn() {
     // Skapar ett nytt button-element
     let generateBtnRef = document.querySelector('#team-generator-btn');
     // Lägger till text till knappen
-    generateBtnRef.textContent = 'Generera ett lag';
+    generateBtnRef.textContent = 'Lägg in en random pokemon i laget.';
 
     // Här skapas en sektion där de nya korten kommer läggas in i.
-    let sectionCard = document.createElement('section');
-    sectionCard.id = 'team-generator-section';
-    sectionCard.classList.add('section');
+    let teamGeneratorSectionRef = document.querySelector('#team-generator-section')
 
-    // Lägger till en klickarp på knappen som utför en randomiserat lag.
-    generateBtnRef.addEventListener('click', addTeam);
-
+    // Lägger till en klickare på knappen som utför en randomiserat lag. För att skicka med ett argument och den körs igång när det klickas så måste man skapa en arrowfunction.
+    generateBtnRef.addEventListener('click', () => addTeam(Math.floor(Math.random() * 151)));
     // sectionCard.appendChild(generateBtn);
     // Lägger in knappen till sektionen.
     generateRef.appendChild(generateBtnRef);
-    generateRef.appendChild(sectionCard);
+    generateRef.appendChild(teamGeneratorSectionRef);
 };
 
-function addTeam() {
+function addTeam(number) {
     // Här refereras det till den övergripande sektionen i 'Team Generator' sidan.
     let generateRef = document.querySelector('#team-generator-section');
 
     // Måste lägga in ett pokemonindexnr som senare skickas med till createCard.
-    let randomPokemon = pokemons[Math.floor(Math.random() * 151)];
+    let randomPokemon = pokemons[number];
 
     // Här skapas den articeln som kommer innehålla alla korten.
     let newCard = document.createElement('card')
@@ -262,6 +258,37 @@ function addTeam() {
     
     generateRef.appendChild(newCard);
 };
+
+// Knappen för att ta bort alla pokemonkort.
+let removeAllBtnRef = document.querySelector('#remove-all-btn');
+// En klickare som kör funktionen removeAllCards
+removeAllBtnRef.addEventListener('click', removeAllCards);
+
+// Funktion för att välja alla artiklar i en section och tömmer den.
+function removeAllCards() {
+    // Gör först en referens till sektionen som alla artiklar hamnar i.
+    const sectionRef = document.querySelector('#team-generator-section');
+    // Hämta sedan hem alla articlar(innehåller korten) och spara den i en array.
+    const articles = sectionRef.querySelectorAll('article');
+
+    // Loopa igenom alla artiklar för att ta bort den.
+    for(let article of articles) {
+        // Ta bort själva artikeln.
+        article.remove();
+    }
+}
+
+// För inputfältet med att 
+let inputPokemonByIdRef = document.querySelector('#input-pokemon-by-id');
+let submitRef = document.querySelector('#submit-btn');
+
+submitRef.addEventListener('click', () => addTeam(Number(inputPokemonByIdRef.value) - 1));
+
+
+
+
+    
+
 
 
 
