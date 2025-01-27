@@ -1,7 +1,36 @@
 const log = (msg) => console.log(msg);
 
 // Startar funktionen
-pageSetup();
+// pageSetup();
+
+console.log(window.location.pathname);
+// Här är länken till sidan.
+if (window.location.pathname === '/index.html') {
+    pageSetup();
+    // Knappen för att ta bort alla pokemonkort.
+    let removeAllBtnRef = document.querySelector('#remove-all-btn');
+    // En klickare som kör funktionen removeAllCards
+    removeAllBtnRef.addEventListener('click', removeAllCards);
+    //
+
+    // För inputfältet med att
+    let inputPokemonByIdRef = document.querySelector('#input-pokemon-by-id');
+    let submitRef = document.querySelector('#submit-btn');
+
+    submitRef.addEventListener('click', () => addTeam(Number(inputPokemonByIdRef.value) - 1));
+} else if (window.location.pathname === '/single-pokemon.html') {
+    console.log('Hejsan från single pokemon.');
+    // här hämtas värdet som skapades i funktionen createCard(). id är en sträng och måste göras om till nummer.
+    // let id = localStorage.getItem('activatePokemon');
+    // Här loopas alla id i pokemon och kollar ifall de är identiska med variabeln id så sparas det i pokemonvärdet.
+    // let pokemon = pokemon.find((pokemon) => pokemon.id === parseInt(id));
+    // console.log('Detta är $');
+
+    let pokemon = JSON.parse(localStorage.getItem('activePokemon'));
+    console.log(pokemon);
+    let bodyRef = document.querySelector('body');
+    bodyRef.appendChild(createCard(pokemon));
+}
 
 // Visar allt på startsidan
 function pageSetup() {
@@ -17,7 +46,7 @@ function pageSetup() {
     // Referar till alla rubriker i naven
     const listItemRefs = document.querySelectorAll('.header__list-item');
     // Lägger en klickar på varje list item i naven.
-    for(let ref of listItemRefs) {
+    for (let ref of listItemRefs) {
         // Vid klick på en av dem så kommer den att köra igång funktionen.
         ref.addEventListener('click', displayActiveSection);
     }
@@ -37,25 +66,25 @@ function displayActiveSection(event) {
     // Referar till 'Search' sektionen som är gömd från början.
     const searchSectionRef = document.querySelector('#search');
 
-    // Skapar en variabel som kommer vara det id som man klickar på. Dessa id har rubrikerna i nav: 
+    // Skapar en variabel som kommer vara det id som man klickar på. Dessa id har rubrikerna i nav:
     // Pokédex = #pokedexLink
     // Team Generator = #generatLink
     // Search Pokemon = #searchLink
     let activeSection = event.target.id;
-    if(activeSection === 'pokedexLink') {
+    if (activeSection === 'pokedexLink') {
         // Här göms sektionerna eller gör de synlig beroende på vad som klickas.
         pokedexSectionRef.classList.remove('d-none');
         generateSectionRef.classList.add('d-none');
         searchSectionRef.classList.add('d-none');
         // Här göms sektionerna eller gör de synlig beroende på vad som klickas.
-    } else if(activeSection === 'generateLink') {
+    } else if (activeSection === 'generateLink') {
         pokedexSectionRef.classList.add('d-none');
         generateSectionRef.classList.remove('d-none');
         searchSectionRef.classList.add('d-none');
         createTeamGeneratorBtn();
-    
+
         // Här göms sektionerna eller gör de synlig beroende på vad som klickas.
-    } else if(activeSection === 'searchLink') {
+    } else if (activeSection === 'searchLink') {
         pokedexSectionRef.classList.add('d-none');
         generateSectionRef.classList.add('d-none');
         searchSectionRef.classList.remove('d-none');
@@ -67,30 +96,41 @@ function setupPokedex() {
     const pokedexSectionRef = document.querySelector('#pokedexSection');
     // En loop som skapar nya pokemonkort utifrån arrayen 'pokemons' som finns i andra javascriptfilen 'pokemons.js'.
     // I for of loopen blir att varje element i arrayen kommer skapa ett kort.
-    for(let pokemon of pokemons) {
+    for (let pokemon of pokemons) {
         // Skapar en array som heter card och som kommer anropa en funktion där korten kommer skapas och då sparas i arrayen där varje element blir ett objekt som innehåller korten.
         let card = createCard(pokemon);
         // Här läggs sedan korten in i den tomma sektionen i #pokedexSection.
-        pokedexSectionRef.appendChild(card)
+        pokedexSectionRef.appendChild(card);
     }
 }
 
 // Denna funktion skapar varje enskild pokemonkort och då har det skickas med hela arrayen pokemon som ligger i pokemons.js filen.
 function createCard(pokemon) {
     // Först skapas en article som är själva huvudkortet och lägger till klassen card.
-    const cardRef = document.createElement('article');
+    // ORDINARIE KOD
+    // const cardRef = document.createElement('article');
+
+    // TESTKOD för att två sidor ska kunna prata med varandra.
+    const cardRef = document.createElement('a');
+    cardRef.addEventListener('click', () => {
+        // Här skapas ett nytt key som heter activePokemon i localStorage.
+        // JSON.stringify gör om objektet till en sträng då localStorage inte kan ta emot objekt utan strängar.
+        localStorage.setItem('activePokemon', JSON.stringify(pokemon));
+    });
+    cardRef.href = '/single-pokemon.html';
+
     cardRef.classList.add('card');
     // Sedan skapas en div som kommer vara inuti articlen som kommer vara högst upp på kortet och få klassen card__top.
     let divRef = document.createElement('div');
     divRef.classList.add('card__top');
-    //I diven så kommer det läggas in en bild som kommer att referera till det pokemonbild som finns i just den iterationens img. 
+    //I diven så kommer det läggas in en bild som kommer att referera till det pokemonbild som finns i just den iterationens img.
     divRef.appendChild(createImg(pokemon));
     // Därefter läggs även en liten rund cirkel längst upp till höger som kommer innehålla den iterationens pokemons id.
     divRef.appendChild(createSpan(pokemon));
     // Här läggs bilden och den lilla cirkeln med ID nr in i huvudkortet.
     cardRef.appendChild(divRef);
 
-    // Här skapas en mittensektion med en div som kommer innehålla en h3(Huvudtitel med namnet på pokemonen) och h4(Subtitel med vilka egenskaper den har) 
+    // Här skapas en mittensektion med en div som kommer innehålla en h3(Huvudtitel med namnet på pokemonen) och h4(Subtitel med vilka egenskaper den har)
     divRef = document.createElement('div');
     divRef.classList.add('card__middle');
     // Genom att anropa funktionen createHeading och skicka med den befintliga objektet så skapas en titel med dess namn.
@@ -104,7 +144,7 @@ function createCard(pokemon) {
     divRef = document.createElement('div');
     divRef.classList.add('card__bottom');
     // En loop körs här för att iterera inom den interarationens objekts stas genom att lägga in pokemon.stats.
-    for(let stat in pokemon.stats) {
+    for (let stat in pokemon.stats) {
         // Här läggs den in i andra divrefen men först anropas createCardStat och då skickas det två argument.
         divRef.appendChild(createCardStat(stat, pokemon));
     }
@@ -187,10 +227,10 @@ function createSubHeading(pokemon) {
     const headRef = document.createElement('h4');
     // Lägger in textinnehållet och refererar till det objektets namn.
     // En ifsats för att kolla att det bara finns ett objekt innuti pokemon.typ.
-    if(pokemon.type.length === 1) {
+    if (pokemon.type.length === 1) {
         // Om det bara finns ett så kommer endast att lägga in en egenskap
         headRef.textContent = pokemon.type[0].name;
-    } 
+    }
     // om det skulle finnas mer än 1 objekt som kommer istället detta köras och lägga in fler egenskaper
     else {
         headRef.textContent = `${pokemon.type[0].name} / ${pokemon.type[1].name}`;
@@ -206,7 +246,7 @@ function createCardStat(stat, pokemon) {
     // Här får den en klass till sig.
     pRef.classList.add('card__stat');
     // Om själva stats heter 'total' så kommer den få klassen card__stat--span-two som kommer då att ta upp två platser i griden.
-    if(stat === 'total') {
+    if (stat === 'total') {
         pRef.classList.add('card__stat--span-two');
     }
     // Varje pRef kommer innehålla följande text där funktionen firstCaseToUpper är en funktion som gör att första bokstaven blir en stor bokstav då det objektets keyword inte kan börja med en stor bokstav. I nästa så har den pokemon.stats[stats] är dess värde och beroende på vilket nr den är på i den forloopen från kodrad 115 så kommer den kopplas med dess värde.
@@ -233,7 +273,7 @@ function createTeamGeneratorBtn() {
     generateBtnRef.textContent = 'Lägg in en random pokemon i laget.';
 
     // Här skapas en sektion där de nya korten kommer läggas in i.
-    let teamGeneratorSectionRef = document.querySelector('#team-generator-section')
+    let teamGeneratorSectionRef = document.querySelector('#team-generator-section');
 
     // Lägger till en klickare på knappen som utför en randomiserat lag. För att skicka med ett argument och den körs igång när det klickas så måste man skapa en arrowfunction.
     generateBtnRef.addEventListener('click', () => addTeam(Math.floor(Math.random() * 151)));
@@ -241,7 +281,7 @@ function createTeamGeneratorBtn() {
     // Lägger in knappen till sektionen.
     generateRef.appendChild(generateBtnRef);
     generateRef.appendChild(teamGeneratorSectionRef);
-};
+}
 
 function addTeam(number) {
     // Här refereras det till den övergripande sektionen i 'Team Generator' sidan.
@@ -251,45 +291,24 @@ function addTeam(number) {
     let randomPokemon = pokemons[number];
 
     // Här skapas den articeln som kommer innehålla alla korten.
-    let newCard = document.createElement('card')
+    let newCard = document.createElement('card');
     newCard.classList.add('card');
-    
-    newCard = createCard(randomPokemon);
-    
-    generateRef.appendChild(newCard);
-};
 
-// Knappen för att ta bort alla pokemonkort.
-let removeAllBtnRef = document.querySelector('#remove-all-btn');
-// En klickare som kör funktionen removeAllCards
-removeAllBtnRef.addEventListener('click', removeAllCards);
+    newCard = createCard(randomPokemon);
+
+    generateRef.appendChild(newCard);
+}
 
 // Funktion för att välja alla artiklar i en section och tömmer den.
 function removeAllCards() {
     // Gör först en referens till sektionen som alla artiklar hamnar i.
     const sectionRef = document.querySelector('#team-generator-section');
     // Hämta sedan hem alla articlar(innehåller korten) och spara den i en array.
-    const articles = sectionRef.querySelectorAll('article');
+    const articles = sectionRef.querySelectorAll('a');
 
     // Loopa igenom alla artiklar för att ta bort den.
-    for(let article of articles) {
+    for (let article of articles) {
         // Ta bort själva artikeln.
         article.remove();
     }
 }
-
-// För inputfältet med att 
-let inputPokemonByIdRef = document.querySelector('#input-pokemon-by-id');
-let submitRef = document.querySelector('#submit-btn');
-
-submitRef.addEventListener('click', () => addTeam(Number(inputPokemonByIdRef.value) - 1));
-
-
-
-
-    
-
-
-
-
-
